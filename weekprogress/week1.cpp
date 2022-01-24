@@ -15,7 +15,7 @@ GLuint trianglePositionVertexBufferObjectID, triangleColorVertexBufferObjectID;
 
 bool initShaderProgram() {
 
-	//#3 shader¸¦ ¸¸µç´Ù. 
+	//#3 shaderë¥¼ ë§Œë“ ë‹¤. 
 	const GLchar* vertexShaderSource =
 		"#version 330 core\n"
 		"in vec3 positionAttribute;"
@@ -23,8 +23,8 @@ bool initShaderProgram() {
 		"out vec3 passColorAttribute;" //glposition, vnormal, vtextcoord
 		"void main()"
 		"{"
-		"gl_Position = vec4(positionAttribute, 1.0);" //< ¸ÅÆ®¸¯½º·Î º¯È¯µÈ ÁÂÇ¥µé 
-		"passColorAttribute = colorAttribute;" //Ä«ÇÇ ±×³É Ãâ·Â 
+		"gl_Position = vec4(positionAttribute, 1.0);" //< ë§¤íŠ¸ë¦­ìŠ¤ë¡œ ë³€í™˜ëœ ì¢Œí‘œë“¤ 
+		"passColorAttribute = colorAttribute;" //ì¹´í”¼ ê·¸ëƒ¥ ì¶œë ¥ 
 		"}";
 
 
@@ -39,11 +39,11 @@ bool initShaderProgram() {
 		"}";
 
 
-	// shader object ¸¸µé¾î¼­ program object·Î ÅëÇÕÇÒ°Å¾ß 
-	// shaderµéÀº low-levelµ¥ÀÌÅÍµé·Î rendering À» ´ã´çÇÏ´Â ¾ÖµéÀÌ´Ù. programÀº ½¦ÀÌ´õµéÀ» ÇÏ³ª·Î °ü¸®ÇÏ°í ÀÌ¿¡ µû¸¥ °¡ÀÌµå¶óÀÎÀÌ µÇ¾î¾ßÇÑ´Ù.
+	// shader object ë§Œë“¤ì–´ì„œ program objectë¡œ í†µí•©í• ê±°ì•¼ 
+	// shaderë“¤ì€ low-levelë°ì´í„°ë“¤ë¡œ rendering ì„ ë‹´ë‹¹í•˜ëŠ” ì• ë“¤ì´ë‹¤. programì€ ì‰ì´ë”ë“¤ì„ í•˜ë‚˜ë¡œ ê´€ë¦¬í•˜ê³  ì´ì— ë”°ë¥¸ ê°€ì´ë“œë¼ì¸ì´ ë˜ì–´ì•¼í•œë‹¤.
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader); //ÄÄÆÄÀÏ ÇØÁà¾ßÇØ 
+	glCompileShader(vertexShader); //ì»´íŒŒì¼ í•´ì¤˜ì•¼í•´ 
 
 	GLint result;
 	GLchar errorLog[512];
@@ -51,7 +51,7 @@ bool initShaderProgram() {
 	if (!result)
 	{
 		glGetShaderInfoLog(vertexShader, 512, NULL, errorLog);
-		cerr << "ERROR: vertex shader ÄÄÆÄÀÏ ½ÇÆÐ\n" << errorLog << endl;
+		cerr << "ERROR: vertex shader ì»´íŒŒì¼ ì‹¤íŒ¨\n" << errorLog << endl;
 		glDeleteShader(vertexShader);
 		return false;
 	}
@@ -65,7 +65,7 @@ bool initShaderProgram() {
 	if (!result)
 	{
 		glGetShaderInfoLog(fragmentShader, 512, NULL, errorLog);
-		cerr << "ERROR: fragment shader ÄÄÆÄÀÏ ½ÇÆÐ\n" << errorLog << endl;
+		cerr << "ERROR: fragment shader ì»´íŒŒì¼ ì‹¤íŒ¨\n" << errorLog << endl;
 
 		return false;
 	}
@@ -73,7 +73,7 @@ bool initShaderProgram() {
 
 
 
-	//#5 µÎ shader object ÇÕÃÄÁÖÀÚ! 
+	//#5 ë‘ shader object í•©ì³ì£¼ìž! 
 	triangleShaderProgramID = glCreateProgram();
 
 	glAttachShader(triangleShaderProgramID, vertexShader);
@@ -81,7 +81,7 @@ bool initShaderProgram() {
 
 	glLinkProgram(triangleShaderProgramID);
 
-	//¸¸µé¾îÁá´ø object »èÁ¦ 
+	//ë§Œë“¤ì–´ì¤¬ë˜ object ì‚­ì œ 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 
@@ -89,7 +89,7 @@ bool initShaderProgram() {
 	glGetProgramiv(triangleShaderProgramID, GL_LINK_STATUS, &result);
 	if (!result) {
 		glGetProgramInfoLog(triangleShaderProgramID, 512, NULL, errorLog);
-		cerr << "ERROR: shader program ¿¬°á ½ÇÆÐ\n" << errorLog << endl;
+		cerr << "ERROR: shader program ì—°ê²° ì‹¤íŒ¨\n" << errorLog << endl;
 		return false;
 	}
 
@@ -100,12 +100,12 @@ bool initShaderProgram() {
 
 bool defineVertexArrayObject() {
 
-	//#1 ÀÎÇ²µ¥ÀÌÅÍµéÀ» ¾î·¹ÀÌ¿¡ ±¸¼ºÇÑ´Ù. 
-	//»ï°¢ÇüÀ» ±¸¼ºÇÏ´Â vertex µ¥ÀÌÅÍ - position°ú color
+	//#1 ì¸í’‹ë°ì´í„°ë“¤ì„ ì–´ë ˆì´ì— êµ¬ì„±í•œë‹¤. 
+	//ì‚¼ê°í˜•ì„ êµ¬ì„±í•˜ëŠ” vertex ë°ì´í„° - positionê³¼ color
 	float position[] = {
-		0.0f,  0.5f, 0.0f, //vertex 1  À§ Áß¾Ó
-		0.5f, -0.5f, 0.0f, //vertex 2  ¿À¸¥ÂÊ ¾Æ·¡
-		-0.5f, -0.5f, 0.0f //vertex 3  ¿ÞÂÊ ¾Æ·¡
+		0.0f,  0.5f, 0.0f, //vertex 1  ìœ„ ì¤‘ì•™
+		0.5f, -0.5f, 0.0f, //vertex 2  ì˜¤ë¥¸ìª½ ì•„ëž˜
+		-0.5f, -0.5f, 0.0f //vertex 3  ì™¼ìª½ ì•„ëž˜
 	};
 
 	float color[] = {
@@ -116,11 +116,11 @@ bool defineVertexArrayObject() {
 
 
 
-	//#2 ¹öÆÛ´Â °¡½ÃÀûÀ¸·Î GPU°¡ ´Ù·ê ¼ö ÀÖ´Â ÃÖ¼Ò ´ÜÀ§ÀÌ´Ù. cpu¿¡¼­ gpu·Î Àü´ÞÇÒ ¶§ »ç¿ëÇÏ´Â interface
-	//Vertex Buffer Object(VBO)¸¦ »ý¼ºÇÏ¿© vertex µ¥ÀÌÅÍ¸¦ º¹»çÇÑ´Ù.
-	glGenBuffers(1, &trianglePositionVertexBufferObjectID); // buffer ¸¦ »ý¼ºÇÏ´Â ÇÔ¼ö (°³¼ö, ÀÌ¸§) vertexÀÇ index¹ÝÈ¯
-	glBindBuffer(GL_ARRAY_BUFFER, trianglePositionVertexBufferObjectID); //buffer ¸¦ binding ÇØÁà ½ÇÁ¦ Àû¿ë(¹öÆÛ °´Ã¼¿¡ ÀúÀåÇÒ µ¥ÀÌÅÍ Á¾·ù(target)¸¦ ÁöÁ¤ÇØÁÖ¾î ÃÖÀûÀÇ ¸Þ¸ð¸®¸¦ ¹öÆÛ °´Ã¼¿¡ ÇÒ´çÇÒ ÁØºñ¸¦ ÇÕ´Ï´Ù.)
-	glBufferData(GL_ARRAY_BUFFER, sizeof(position), position, GL_STATIC_DRAW); //  ½ÇÁ¦·Î ¹öÆÛ °´Ã¼¸¦ À§ÇÑ ºñµð¿À ¸Þ¸ð¸® °ø°£À» ÇÒ´çÇÏ°í vertex µ¥ÀÌÅÍ¸¦  ¹öÆÛ °´Ã¼¿¡ º¹»çÇÕ´Ï´Ù. 
+	//#2 ë²„í¼ëŠ” ê°€ì‹œì ìœ¼ë¡œ GPUê°€ ë‹¤ë£° ìˆ˜ ìžˆëŠ” ìµœì†Œ ë‹¨ìœ„ì´ë‹¤. cpuì—ì„œ gpuë¡œ ì „ë‹¬í•  ë•Œ ì‚¬ìš©í•˜ëŠ” interface
+	//Vertex Buffer Object(VBO)ë¥¼ ìƒì„±í•˜ì—¬ vertex ë°ì´í„°ë¥¼ ë³µì‚¬í•œë‹¤.
+	glGenBuffers(1, &trianglePositionVertexBufferObjectID); // buffer ë¥¼ ìƒì„±í•˜ëŠ” í•¨ìˆ˜ (ê°œìˆ˜, ì´ë¦„) vertexì˜ indexë°˜í™˜
+	glBindBuffer(GL_ARRAY_BUFFER, trianglePositionVertexBufferObjectID); //buffer ë¥¼ binding í•´ì¤˜ ì‹¤ì œ ì ìš©(ë²„í¼ ê°ì²´ì— ì €ìž¥í•  ë°ì´í„° ì¢…ë¥˜(target)ë¥¼ ì§€ì •í•´ì£¼ì–´ ìµœì ì˜ ë©”ëª¨ë¦¬ë¥¼ ë²„í¼ ê°ì²´ì— í• ë‹¹í•  ì¤€ë¹„ë¥¼ í•©ë‹ˆë‹¤.)
+	glBufferData(GL_ARRAY_BUFFER, sizeof(position), position, GL_STATIC_DRAW); //  ì‹¤ì œë¡œ ë²„í¼ ê°ì²´ë¥¼ ìœ„í•œ ë¹„ë””ì˜¤ ë©”ëª¨ë¦¬ ê³µê°„ì„ í• ë‹¹í•˜ê³  vertex ë°ì´í„°ë¥¼  ë²„í¼ ê°ì²´ì— ë³µì‚¬í•©ë‹ˆë‹¤. 
 
 	glGenBuffers(1, &triangleColorVertexBufferObjectID);  //RGB buffer 
 	glBindBuffer(GL_ARRAY_BUFFER, triangleColorVertexBufferObjectID); 
@@ -135,7 +135,7 @@ bool defineVertexArrayObject() {
 
 	GLint positionAttribute = glGetAttribLocation(triangleShaderProgramID, "positionAttribute");
 	if (positionAttribute == -1) {
-		cerr << "position ¼Ó¼º ¼³Á¤ ½ÇÆÐ" << endl;
+		cerr << "position ì†ì„± ì„¤ì • ì‹¤íŒ¨" << endl;
 		return false;
 	}
 
@@ -146,7 +146,7 @@ bool defineVertexArrayObject() {
 
 	GLint colorAttribute = glGetAttribLocation(triangleShaderProgramID, "colorAttribute");
 	if (colorAttribute == -1) {
-		cerr << "color ¼Ó¼º ¼³Á¤ ½ÇÆÐ" << endl;
+		cerr << "color ì†ì„± ì„¤ì • ì‹¤íŒ¨" << endl;
 		return false;
 	}
 	glBindBuffer(GL_ARRAY_BUFFER, triangleColorVertexBufferObjectID);
@@ -165,9 +165,9 @@ bool defineVertexArrayObject() {
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
-	//Ã³À½ 2°³ÀÇ ÆÄ¶ó¹ÌÅÍ´Â viewport rectangleÀÇ ¿ÞÂÊ ¾Æ·¡ ÁÂÇ¥
-	//´ÙÀ½ 2°³ÀÇ ÆÄ¶ó¹ÌÅÍ´Â viewportÀÇ ³Êºñ¿Í ³ôÀÌÀÌ´Ù.
-	//framebufferÀÇ width¿Í height¸¦ °¡Á®¿Í glViewport¿¡¼­ »ç¿ëÇÑ´Ù.
+	//ì²˜ìŒ 2ê°œì˜ íŒŒë¼ë¯¸í„°ëŠ” viewport rectangleì˜ ì™¼ìª½ ì•„ëž˜ ì¢Œí‘œ
+	//ë‹¤ìŒ 2ê°œì˜ íŒŒë¼ë¯¸í„°ëŠ” viewportì˜ ë„ˆë¹„ì™€ ë†’ì´ì´ë‹¤.
+	//framebufferì˜ widthì™€ heightë¥¼ ê°€ì ¸ì™€ glViewportì—ì„œ ì‚¬ìš©í•œë‹¤.
 	glViewport(0, 0, width, height);
 
 	framebufferWidth = width;
@@ -200,7 +200,7 @@ int main()
 
 	if (!glfwInit()) {
 
-		cerr << "Error: GLFW ÃÊ±âÈ­ ½ÇÆÐ" << endl;
+		cerr << "Error: GLFW ì´ˆê¸°í™” ì‹¤íŒ¨" << endl;
 		std::exit(EXIT_FAILURE);
 	}
 
@@ -238,7 +238,7 @@ int main()
 	GLenum errorCode = glewInit();
 	if (GLEW_OK != errorCode) {
 
-		cerr << "Error: GLEW ÃÊ±âÈ­ ½ÇÆÐ - " << glewGetErrorString(errorCode) << endl;
+		cerr << "Error: GLEW ì´ˆê¸°í™” ì‹¤íŒ¨ - " << glewGetErrorString(errorCode) << endl;
 
 		glfwTerminate();
 		std::exit(EXIT_FAILURE);
@@ -265,7 +265,7 @@ int main()
 
 	if (!initShaderProgram()) {
 
-		cerr << "Error: Shader Program »ý¼º ½ÇÆÐ" << endl;
+		cerr << "Error: Shader Program ìƒì„± ì‹¤íŒ¨" << endl;
 
 		glfwTerminate();
 		std::exit(EXIT_FAILURE);
@@ -275,7 +275,7 @@ int main()
 
 	if (!defineVertexArrayObject()) {
 
-		cerr << "Error: Shader Program »ý¼º ½ÇÆÐ" << endl;
+		cerr << "Error: Shader Program ìƒì„± ì‹¤íŒ¨" << endl;
 
 		glfwTerminate();
 		std::exit(EXIT_FAILURE);
